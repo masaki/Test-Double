@@ -2,9 +2,17 @@ package Test::Double;
 
 use strict;
 use warnings;
+use Exporter qw(import);
+use Test::Double::Stub;
 
 our $VERSION = '0.01';
 $VERSION = eval $VERSION;
+
+our @EXPORT = qw(stub);
+
+sub stub {
+    bless \$_[0], 'Test::Double::Stub';
+}
 
 1;
 __END__
@@ -69,4 +77,3 @@ it under the same terms as Perl itself.
 L<http://xunitpatterns.com/Test%20Double.html>
 
 =cut
-
