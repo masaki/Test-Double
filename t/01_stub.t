@@ -44,7 +44,7 @@ subtest 'stub()' => sub {
         stub($foo)->bar(sub { 'BAR' });
         is $other->bar => 'bar';
         my $another = t::Foo->new;
-        is $another->bar => 'bar;
+        is $another->bar => 'bar';
     };
 };
 
