@@ -43,3 +43,44 @@ sub verify {
 
 1;
 __END__
+
+=encoding utf-8
+
+=for stopwords
+
+=head1 NAME
+
+Test::Double::Mock::Expectation - Mock expectation object
+
+=head1 METHODS
+
+=over 4
+
+=item with(@args)
+
+Assigns expected callee arguments.
+
+=item returns($expected_value_or_subref)
+
+Assigns expected returning value or subroutine reference.
+
+=item verify
+
+Verify this expectation.
+
+=back
+
+=head1 AUTHOR
+
+NAKAGAWA Masaki E<lt>masaki@cpan.orgE<gt>
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 SEE ALSO
+
+L<Test::Double>, L<Test::Double::Mock>
+
+=cut

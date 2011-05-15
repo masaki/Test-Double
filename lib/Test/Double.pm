@@ -39,12 +39,17 @@ Test::Double - Perl extension for Test Double.
   # in your tests
   use Test::More;
   use Test::Double;
-
+  
   my $foo = Foo->new;
   is $foo->bar, 'bar', 'bar() returns "bar"';
-
+  
+  # stub out
   stub($foo)->bar('BAR');
   is $foo->bar, 'BAR', 'stubbed bar() returns "BAR"';
+  
+  # mock out
+  mock($foo)->expects('bar')->returns('BAR');
+  is $foo->bar, 'BAR', 'mocked bar() returns 'BAR';
   
   done_testing;
   
@@ -65,6 +70,16 @@ using AUTOLOAD mechanism.
   # after, $object->some_method() returns $expected_value
 
 See L<http://xunitpatterns.com/Test%20Stub.html>
+
+=item mock($object)
+
+Returns mock object. This object can be defined expectation
+by calling expects() method.
+
+  mock($object)->expects('some_method');
+  # after, $object->some_method() returns $expected_value
+
+See L<Test::Double::Mock>
 
 =back
 

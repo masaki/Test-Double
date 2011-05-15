@@ -51,3 +51,40 @@ sub verify {
 
 1;
 __END__
+
+=encoding utf-8
+
+=for stopwords
+
+=head1 NAME
+
+Test::Double::Mock - Mock object
+
+=head1 METHODS
+
+=over 4
+
+=item expects($name)
+
+Returns L<Test::Double::Mock::Expectation> object.
+
+=item verify()
+
+Verify all expectations of this mock object.
+
+=back
+
+=head1 AUTHOR
+
+NAKAGAWA Masaki E<lt>masaki@cpan.orgE<gt>
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 SEE ALSO
+
+L<Test::Double>, L<Test::Double::Mock::Expectation>
+
+=cut
