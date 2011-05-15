@@ -5,7 +5,8 @@ all_from 'lib/Test/Double.pm';
 readme_from 'lib/Test/Double.pm';
 readme_pod_from 'lib/Test/Double.pm';
 
-# requires '';
+requires 'Exporter';
+requires 'Class::Monadic';
 
 tests 't/*.t t/*/*.t';
 test_requires 'Test::More' => 0.96;
