@@ -13,3 +13,4 @@ tmon.out
 *.bak
 *.old
 *.sw[po]
+.redcar/
