@@ -2,13 +2,7 @@ use strict;
 use warnings;
 use Test::More;
 use Test::Double;
-
-{
-    package t::Foo;
-    sub new { bless {}, shift }
-    sub bar { return 'bar' }
-    sub baz { return 'baz' }
-}
+use t::Utils;
 
 subtest 'stub()' => sub {
     subtest 'should stub out method with coderef' => sub {
