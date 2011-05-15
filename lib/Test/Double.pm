@@ -4,14 +4,18 @@ use strict;
 use warnings;
 use Exporter qw(import);
 use Test::Double::Stub;
+use Test::Double::Mock;
 
 our $VERSION = '0.01';
 $VERSION = eval $VERSION;
 
-our @EXPORT = qw(stub);
+our @EXPORT = qw(stub mock);
 
 sub stub {
     bless \$_[0], 'Test::Double::Stub';
+}
+
+sub mock {
 }
 
 1;
