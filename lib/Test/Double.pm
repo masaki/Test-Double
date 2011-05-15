@@ -16,6 +16,7 @@ sub stub {
 }
 
 sub mock {
+    Test::Double::Mock->wrap($_[0]);
 }
 
 1;
