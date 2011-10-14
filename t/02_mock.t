@@ -8,6 +8,7 @@ subtest 'mock()' => sub {
     subtest 'should mock out method with coderef' => sub {
         my $foo = t::Foo->new;
         mock($foo)->expects('bar')->returns(sub { 'BAR' });
+
         is $foo->bar => 'BAR';
     };
 
@@ -15,6 +16,7 @@ subtest 'mock()' => sub {
         for ('BAR', 1, [], {}) {
             my $foo = t::Foo->new;
             mock($foo)->expects('bar')->returns($_);
+
             is $foo->bar => $_;
         }
     };
@@ -22,6 +24,7 @@ subtest 'mock()' => sub {
     subtest 'should not mock out non-target method' => sub {
         my $foo = t::Foo->new;
         mock($foo)->expects('bar')->returns(sub { 'BAR' });
+
         is $foo->baz => 'baz';
     };
 
@@ -29,8 +32,10 @@ subtest 'mock()' => sub {
         my $foo = t::Foo->new;
         my $other = t::Foo->new;
         mock($foo)->expects('bar')->returns(sub { 'BAR' });
-        is $other->bar => 'bar';
         my $another = t::Foo->new;
+
+        is $foo->bar => 'BAR';
+        is $other->bar => 'bar';
         is $another->bar => 'bar';
     };
 };
