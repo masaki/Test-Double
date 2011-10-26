@@ -1,6 +1,5 @@
-use strict;
-use warnings;
 use Test::More;
+use Test::Flatten;
 use Test::Memory::Cycle;
 use Test::Double;
 use t::Utils;
@@ -11,6 +10,13 @@ subtest 'mock()' => sub {
         mock($foo)->expects('bar')->returns(sub { 'BAR' });
 
         is $foo->bar => 'BAR';
+    };
+
+    subtest 'should not have memory leaks' => sub {
+        my $foo = t::Foo->new;
+        mock($foo)->expects('bar')->returns(1);
+
+        memory_cycle_ok $foo;
     };
 
     subtest 'should mock out method without coderef' => sub {
@@ -38,13 +44,6 @@ subtest 'mock()' => sub {
         is $foo->bar => 'BAR';
         is $other->bar => 'bar';
         is $another->bar => 'bar';
-    };
-
-    subtest 'should not have memory leaks' => sub {
-        my $foo = t::Foo->new;
-        mock($foo)->expects('bar')->returns(1);
-
-        memory_cycle_ok $foo;
     };
 };
 

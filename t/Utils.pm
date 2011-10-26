@@ -1,5 +1,13 @@
 package t::Utils;
-# only declaration
+
+use strict;
+use warnings;
+
+sub import {
+    strict->import;
+    warnings->import;
+}
+
 1;
 
 package t::Foo;

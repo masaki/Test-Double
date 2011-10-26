@@ -1,6 +1,5 @@
-use strict;
-use warnings;
 use Test::More;
+use Test::Flatten;
 use Test::Memory::Cycle;
 use Test::Double;
 use t::Utils;
