@@ -3,6 +3,7 @@
 \.svn/
 \.git/
 ^MANIFEST\.
+^MYMETA\.
 ^Makefile$
 ~$
 ^#
@@ -20,4 +21,5 @@
 ^nytprof
 ^tmon\.out
 \.redcar/
+^author/
 

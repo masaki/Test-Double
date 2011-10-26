@@ -1,7 +1,8 @@
 Revision history for Perl extension Test::Double
 
-trunk
-        - fixed memory leaks in mock
+0.02
+        - fixed memory leaks
+        - flatten outputs at subtest (Test::Flatten)
 
 0.01
         - original version

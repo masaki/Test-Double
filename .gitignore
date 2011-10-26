@@ -1,6 +1,9 @@
 Makefile
+Makefile.old
+MANIFEST
 MANIFEST.bak
-META.yml
+META.*
+MYMETA.*
 blib
 inc/
 pm_to_blib
