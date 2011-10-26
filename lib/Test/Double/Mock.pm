@@ -3,6 +3,7 @@ package Test::Double::Mock;
 use strict;
 use warnings;
 use Class::Monadic qw(monadic);
+use Scalar::Util qw(weaken);
 use Test::Double::Mock::Expectation;
 
 {
@@ -13,6 +14,8 @@ use Test::Double::Mock::Expectation;
             package  => ref($instance),
             instance => $instance,
         );
+        weaken($instance);
+        return $MOCKS{$instance};
     }
 
     sub reset_all {
