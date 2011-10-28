@@ -15,7 +15,6 @@ requires 'Scalar::Util' => 1.14;
 tests 't/*.t t/*/*.t';
 test_requires 'Test::More' => 0.96;
 test_requires 'Test::Flatten';
-test_requires 'Test::Memory::Cycle';
 
 author_tests 'xt';
 
