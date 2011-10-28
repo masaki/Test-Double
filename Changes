@@ -1,5 +1,9 @@
 Revision history for Perl extension Test::Double
 
+trunk
+        - add Test::Flatten dependency, oops
+        - memory tests are moved to xt
+
 0.02
         - fixed memory leaks
         - flatten outputs at subtest (Test::Flatten)
