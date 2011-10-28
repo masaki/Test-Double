@@ -1,6 +1,6 @@
 Revision history for Perl extension Test::Double
 
-trunk
+0.03
         - add Test::Flatten dependency, oops
         - memory tests are moved to xt
 
