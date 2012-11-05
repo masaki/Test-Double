@@ -1,5 +1,4 @@
 use Test::More;
-use Test::Flatten;
 use Test::Double;
 use t::Utils;
 
