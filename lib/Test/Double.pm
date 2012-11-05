@@ -49,7 +49,7 @@ Test::Double - Perl extension for Test Double.
   
   # mock out
   mock($foo)->expects('bar')->returns('BAR');
-  is $foo->bar, 'BAR', 'mocked bar() returns 'BAR';
+  is $foo->bar, 'BAR', 'mocked bar() returns "BAR"';
   
   done_testing;
   
@@ -95,5 +95,7 @@ it under the same terms as Perl itself.
 =head1 SEE ALSO
 
 L<http://xunitpatterns.com/Test%20Double.html>
+
+L<Test::Stub>, L<Class::Monadic>
 
 =cut
