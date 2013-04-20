@@ -9,7 +9,7 @@ use Test::Double::Mock;
 our $VERSION = '0.04';
 $VERSION = eval $VERSION;
 
-our @EXPORT = qw(stub mock);
+our @EXPORT = qw(stub mock verify reset);
 
 sub stub {
     bless \$_[0], 'Test::Double::Stub';
@@ -17,6 +17,14 @@ sub stub {
 
 sub mock {
     Test::Double::Mock->wrap($_[0]);
+}
+
+sub verify {
+    Test::Double::Mock->verify_all;
+}
+
+sub reset {
+    Test::Double::Mock->reset_all;
 }
 
 1;
@@ -50,6 +58,9 @@ Test::Double - Perl extension for Test Double.
   # mock out
   mock($foo)->expects('bar')->returns('BAR');
   is $foo->bar, 'BAR', 'mocked bar() returns "BAR"';
+
+  verify;
+  reset;
   
   done_testing;
   
@@ -80,6 +91,14 @@ by calling expects() method.
   # after, $object->some_method() returns $expected_value
 
 See L<Test::Double::Mock>
+
+=item verify
+
+Verify how many times method calling, and method calling with what args .
+
+=item reset
+
+Reset mocking objects.
 
 =back
 
