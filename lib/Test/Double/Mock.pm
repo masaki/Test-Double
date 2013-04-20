@@ -23,7 +23,9 @@ use Test::Double::Mock::Expectation;
     }
 
     sub verify_all {
-        $_->verify for values %MOCKS;
+        for my $instance (values %MOCKS) {
+            $_->verify for @{$instance->{expectations}};
+        }
     }
 }
 
@@ -44,12 +46,6 @@ sub expects {
     push @{ $self->{expectations} }, $expectation;
 
     return $expectation;
-}
-
-sub verify {
-    my $self = shift;
-    # TODO: implements
-    0;
 }
 
 1;
