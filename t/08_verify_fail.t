@@ -15,37 +15,37 @@ subtest 'verify faile' => sub {
         my $foo = t::Foo->new;
         mock($foo)->expects('bar')->with(1)->returns(2);
         $foo->bar(2);
-        verify;
+        Test::Double->verify;
         $TB->like($out->read,
                   qr/not ok 1 - Expected method must be called with 1/);
         $TB->like($err->read,
                   qr/Failed test 'Expected method must be called with 1'/);
 
-        reset;
+        Test::Double->reset;
 
         $foo = t::Foo->new;
         mock($foo)->expects('baz')->with('foo')->returns(2);
         $foo->baz;
-        verify;
+        Test::Double->verify;
         $TB->like($out->read,
                   qr/not ok 2 - Expected method must be called with foo/);
         $TB->like($err->read,
                   qr/Failed test 'Expected method must be called with foo'/);
 
         $foo->baz(3);
-        verify;
+        Test::Double->verify;
         $TB->like($out->read,
                   qr/not ok 3 - Expected method must be called with foo/);
         $TB->like($err->read,
                   qr/Failed test 'Expected method must be called with foo'/);
 
         $foo->baz('foo', 3);
-        verify;
+        Test::Double->verify;
         $TB->like($out->read,
                   qr/not ok 5 - Expected method must be called with foo/);
         $TB->like($err->read,
                   qr/Failed test 'Expected method must be called with foo'/);
-        reset;
+        Test::Double->reset;
     };
 
     subtest 'at_most' => sub {
@@ -54,36 +54,37 @@ subtest 'verify faile' => sub {
         $foo->baz;
         $foo->baz;
         $foo->baz;
-        verify;
+        Test::Double->verify;
         $TB->like($out->read,
                   qr/not ok 1 - Expected method must be called at most 2/);
         $TB->like($err->read,
                   qr/Failed test 'Expected method must be called at most 2'/);
-        reset;
+        Test::Double->reset;
     };
 
     subtest 'times' => sub {
         my $foo = t::Foo->new;
         mock($foo)->expects('baz')->times(2)->returns('foo');
         $foo->baz;
-        verify;
+        Test::Double->verify;
         $TB->like($out->read,
                   qr/not ok 1 - Expected method must be called 2 times/);
         $TB->like($err->read,
                   qr/Failed test 'Expected method must be called 2 times'/);
         reset;
+        Test::Double->reset;
     };
 
     subtest 'at least' => sub {
         my $foo = t::Foo->new;
         mock($foo)->expects('baz')->at_least(2)->returns('foo');
         $foo->baz;
-        verify;
+        Test::Double->verify;
         $TB->like($out->read,
                   qr/not ok 1 - Expected method must be called at least 2/);
         $TB->like($err->read,
                   qr/Failed test 'Expected method must be called at least 2'/);
-        reset;
+        Test::Double->reset;
     };
 };
 

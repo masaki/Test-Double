@@ -9,7 +9,7 @@ use Test::Double::Mock;
 our $VERSION = '0.04';
 $VERSION = eval $VERSION;
 
-our @EXPORT = qw(stub mock verify reset);
+our @EXPORT = qw(stub mock);
 
 sub stub {
     bless \$_[0], 'Test::Double::Stub';
@@ -20,10 +20,17 @@ sub mock {
 }
 
 sub verify {
+    my $class = shift;
     Test::Double::Mock->verify_all;
 }
 
+sub verify_result {
+    my $class = shift;
+    Test::Double::Mock->verify_result_all;
+}
+
 sub reset {
+    my $class = shift;
     Test::Double::Mock->reset_all;
 }
 
@@ -56,11 +63,14 @@ Test::Double - Perl extension for Test Double.
   is $foo->bar, 'BAR', 'stubbed bar() returns "BAR"';
   
   # mock out
-  mock($foo)->expects('bar')->returns('BAR');
+  mock($foo)->expects('bar')->at_most(2)->returns('BAR');
   is $foo->bar, 'BAR', 'mocked bar() returns "BAR"';
 
-  verify;
-  reset;
+  my $result = Test::Double->verify_result;
+  ok $result->[0]->{bar}->{at_most};
+
+  Test::Double->verify;
+  Test::Double->reset;
   
   done_testing;
   
@@ -95,6 +105,14 @@ See L<Test::Double::Mock>
 =item verify
 
 Verify how many times method calling, and method calling with what args .
+
+=item verify_result
+
+Returns verified result.
+
+  my $result = Test::Double->verify_result;
+  $result->{some_method}->{at_least};
+  # result->{what method}->{what expectation}
 
 =item reset
 
