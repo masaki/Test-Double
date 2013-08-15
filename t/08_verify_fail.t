@@ -1,90 +1,117 @@
 use lib qw(t/lib);
-use Test::Simple::Catch;
-use Test::More;
-use Test::Double;
-use t::Utils;
+use Test::Tester; # should load before Test::More
 
-my($out, $err) = Test::Simple::Catch::caught();
-Test::Builder->new->no_header(1);
-Test::Builder->new->no_ending(1);
-my $TB = Test::Builder->create;
-$TB->plan(tests => 14);
+use t::Utils;
+use Test::Double;
+use Test::More;
 
 subtest 'verify faile' => sub {
     subtest 'with' => sub {
-        my $foo = t::Foo->new;
-        mock($foo)->expects('bar')->with(1)->returns(2);
-        $foo->bar(2);
-        Test::Double->verify;
-        $TB->like($out->read,
-                  qr/not ok 1 - Expected method must be called with 1/);
-        $TB->like($err->read,
-                  qr/Failed test 'Expected method must be called with 1'/);
+        check_test( sub {
+                        my $foo = t::Foo->new;
+                        mock($foo)->expects('bar')->with(1)->returns(2);
+                        $foo->bar(2);
+                        Test::Double->verify;
+                        Test::Double->reset;
+                    },{
+                        ok => 0,
+                        name => 'Expected method must be called with 1',
+                        diag => "",
+                        depth => 4,
+                    }
+                );
 
-        Test::Double->reset;
+        check_test( sub {
+                        my $foo = t::Foo->new;
+                        mock($foo)->expects('baz')->with('foo')->returns(2);
+                        $foo->baz;
+                        Test::Double->verify;
+                        Test::Double->reset;
+                    },{
+                        ok => 0,
+                        name => 'Expected method must be called with foo',
+                        diag => "",
+                        depth => 4,
+                    }
+                );
 
-        $foo = t::Foo->new;
-        mock($foo)->expects('baz')->with('foo')->returns(2);
-        $foo->baz;
-        Test::Double->verify;
-        $TB->like($out->read,
-                  qr/not ok 2 - Expected method must be called with foo/);
-        $TB->like($err->read,
-                  qr/Failed test 'Expected method must be called with foo'/);
+        check_test( sub {
+                        my $foo = t::Foo->new;
+                        mock($foo)->expects('baz')->with('foo')->returns(2);
+                        $foo->baz(3);
+                        Test::Double->verify;
+                        Test::Double->reset;
+                    },{
+                        ok => 0,
+                        name => 'Expected method must be called with foo',
+                        diag => "",
+                        depth => 4,
+                    }
+                );
 
-        $foo->baz(3);
-        Test::Double->verify;
-        $TB->like($out->read,
-                  qr/not ok 3 - Expected method must be called with foo/);
-        $TB->like($err->read,
-                  qr/Failed test 'Expected method must be called with foo'/);
-
-        $foo->baz('foo', 3);
-        Test::Double->verify;
-        $TB->like($out->read,
-                  qr/not ok 5 - Expected method must be called with foo/);
-        $TB->like($err->read,
-                  qr/Failed test 'Expected method must be called with foo'/);
-        Test::Double->reset;
+        check_test( sub {
+                        my $foo = t::Foo->new;
+                        mock($foo)->expects('baz')->with('foo')->returns(2);
+                        $foo->baz('foo', 3);
+                        Test::Double->verify;
+                        Test::Double->reset;
+                    },{
+                        ok => 0,
+                        name => 'Expected method must be called with foo',
+                        diag => "",
+                        depth => 4,
+                    }
+                );
     };
 
     subtest 'at_most' => sub {
-        my $foo = t::Foo->new;
-        mock($foo)->expects('baz')->at_most(2)->returns('foo');
-        $foo->baz;
-        $foo->baz;
-        $foo->baz;
-        Test::Double->verify;
-        $TB->like($out->read,
-                  qr/not ok 1 - Expected method must be called at most 2/);
-        $TB->like($err->read,
-                  qr/Failed test 'Expected method must be called at most 2'/);
-        Test::Double->reset;
+        check_test( sub {
+                        my $foo = t::Foo->new;
+                        mock($foo)->expects('baz')->at_most(2)->returns('foo');
+                        $foo->baz;
+                        $foo->baz;
+                        $foo->baz;
+                        Test::Double->verify;
+                        Test::Double->reset;
+                    },{
+                        ok => 0,
+                        name => 'Expected method must be called at most 2',
+                        diag => "",
+                        depth => 4,
+                    }
+                );
     };
 
     subtest 'times' => sub {
-        my $foo = t::Foo->new;
-        mock($foo)->expects('baz')->times(2)->returns('foo');
-        $foo->baz;
-        Test::Double->verify;
-        $TB->like($out->read,
-                  qr/not ok 1 - Expected method must be called 2 times/);
-        $TB->like($err->read,
-                  qr/Failed test 'Expected method must be called 2 times'/);
-        reset;
-        Test::Double->reset;
+        check_test( sub {
+                        my $foo = t::Foo->new;
+                        mock($foo)->expects('baz')->times(2)->returns('foo');
+                        $foo->baz;
+                        Test::Double->verify;
+                        Test::Double->reset;
+                    },{
+                        ok => 0,
+                        name => 'Expected method must be called 2 times',
+                        diag => "",
+                        depth => 4,
+                    }
+                );
     };
 
     subtest 'at least' => sub {
-        my $foo = t::Foo->new;
-        mock($foo)->expects('baz')->at_least(2)->returns('foo');
-        $foo->baz;
-        Test::Double->verify;
-        $TB->like($out->read,
-                  qr/not ok 1 - Expected method must be called at least 2/);
-        $TB->like($err->read,
-                  qr/Failed test 'Expected method must be called at least 2'/);
-        Test::Double->reset;
+        check_test( sub {
+                        my $foo = t::Foo->new;
+                        mock($foo)->expects('baz')->at_least(2)->returns('foo');
+                        $foo->baz;
+                        Test::Double->verify;
+                        Test::Double->reset;
+                    },{
+                        ok => 0,
+                        name => 'Expected method must be called at least 2',
+                        diag => "",
+                        depth => 4,
+                    }
+                );
     };
 };
 
