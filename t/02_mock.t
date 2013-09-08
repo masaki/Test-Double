@@ -1,5 +1,6 @@
-use Test::More;
+use lib qw(t/lib);
 use Test::Double;
+use Test::More;
 use t::Utils;
 
 subtest 'mock()' => sub {
