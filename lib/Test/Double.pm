@@ -6,7 +6,7 @@ use Exporter qw(import);
 use Test::Double::Stub;
 use Test::Double::Mock;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 $VERSION = eval $VERSION;
 
 our @EXPORT = qw(stub mock);
