@@ -22,8 +22,21 @@ use Test::Double::Mock::Expectation;
         %MOCKS = ();
     }
 
+    sub verify_result_all {
+        my $all_result;
+        for my $instance (values %MOCKS) {
+            for (@{$instance->{expectations}}) {
+                my $result = $_->verify_result;
+                $all_result->{$_->{method}} = $result;
+            }
+        }
+        return $all_result;
+    }
+
     sub verify_all {
-        $_->verify for values %MOCKS;
+        for my $instance (values %MOCKS) {
+            $_->verify for @{$instance->{expectations}};
+        }
     }
 }
 
@@ -46,12 +59,6 @@ sub expects {
     return $expectation;
 }
 
-sub verify {
-    my $self = shift;
-    # TODO: implements
-    0;
-}
-
 1;
 __END__
 
@@ -70,10 +77,6 @@ Test::Double::Mock - Mock object
 =item expects($name)
 
 Returns L<Test::Double::Mock::Expectation> object.
-
-=item verify()
-
-Verify all expectations of this mock object.
 
 =back
 

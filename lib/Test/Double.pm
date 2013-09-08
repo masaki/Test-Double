@@ -19,6 +19,21 @@ sub mock {
     Test::Double::Mock->wrap($_[0]);
 }
 
+sub verify {
+    my $class = shift;
+    Test::Double::Mock->verify_all;
+}
+
+sub verify_result {
+    my $class = shift;
+    Test::Double::Mock->verify_result_all;
+}
+
+sub reset {
+    my $class = shift;
+    Test::Double::Mock->reset_all;
+}
+
 1;
 __END__
 
@@ -48,8 +63,14 @@ Test::Double - Perl extension for Test Double.
   is $foo->bar, 'BAR', 'stubbed bar() returns "BAR"';
   
   # mock out
-  mock($foo)->expects('bar')->returns('BAR');
+  mock($foo)->expects('bar')->at_most(2)->returns('BAR');
   is $foo->bar, 'BAR', 'mocked bar() returns "BAR"';
+
+  my $result = Test::Double->verify_result;
+  ok $result->{bar}->{at_most};
+
+  Test::Double->verify;
+  Test::Double->reset;
   
   done_testing;
   
@@ -80,6 +101,22 @@ by calling expects() method.
   # after, $object->some_method() returns $expected_value
 
 See L<Test::Double::Mock>
+
+=item verify
+
+Verify how many times method calling, and method calling with what args.
+
+=item verify_result
+
+Returns verified result.
+
+  my $result = Test::Double->verify_result;
+  $result->{some_method}->{at_least};
+  # result->{what method}->{what expectation}
+
+=item reset
+
+Reset mocking objects.
 
 =back
 
