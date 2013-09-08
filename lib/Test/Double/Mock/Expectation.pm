@@ -178,6 +178,8 @@ Return verified result hash.
 
 Verify how many times does method get called, and what parameters passed to method. Setting expectations that how many calling method by at_least() or at_most() or times() and what parameters passed by with().
 
+=back
+
 =head1 AUTHOR
 
 NAKAGAWA Masaki E<lt>masaki@cpan.orgE<gt>
