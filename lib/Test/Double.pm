@@ -67,7 +67,7 @@ Test::Double - Perl extension for Test Double.
   is $foo->bar, 'BAR', 'mocked bar() returns "BAR"';
 
   my $result = Test::Double->verify_result;
-  ok $result->[0]->{bar}->{at_most};
+  ok $result->{bar}->{at_most};
 
   Test::Double->verify;
   Test::Double->reset;
@@ -104,7 +104,7 @@ See L<Test::Double::Mock>
 
 =item verify
 
-Verify how many times method calling, and method calling with what args .
+Verify how many times method calling, and method calling with what args.
 
 =item verify_result
 
